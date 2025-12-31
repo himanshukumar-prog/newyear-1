@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Year Surprise 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      background-size: 600% 600%;
+      animation: bgMove 12s ease infinite;
+      user-select: none;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px 40px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .cat-img {
+      width: 140px;
+      margin-bottom: 20px;
+      animation: zoomPeek 2.5s ease-in-out infinite;
+    }
+
+    @keyframes zoomPeek {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .text {
+      font-size: 16px;
+      color: rgb(0, 0, 0)000;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .name-line {
+      margin: 15px 0 25px;
+      font-size: 16px;
+      color:rgb(0, 0, 0)000;
+      }
+
+    .name-line input {
+      background: transparent;
+      border: none;
+      border-bottom: 2px dashed #fff;
+      width: 160px;
+      text-align: center;
+      font-size: 16px;
+      color: rgb(0, 0, 0)000;
+      outline: none;
+    }
+
+    .name-line input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      background: #ff5e99;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    button:hover {
+      background: #ff3d87;
+      transform: translateY(-2px);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Hearts -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="container">
+    <!-- Cat Image -->
+    <img src="./cat looking png.png" alt="Cute Cat" class="cat-img">
+
+    <!-- Text -->
+    <div class="text">
+      You know that one name I always call you by? <br>
+      Let's see if you still remember it. <br>
+      Say it! 🤔👀
+    </div>
+
+    <!-- Name Input Line -->
+    <div class="name-line">
+      That name is <input type="text" id="nameInput" placeholder="______">
+    </div>
+
+    <!-- Button -->
+    <button onclick="goNext()">I know 😌</button>
+  </div>
+
+  <script>
+    function goNext() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (name === "") {
+        alert("Heyyy 😏 name fill pannu first!");
+        return;
+      }
+
+      // store name for next page
+      localStorage.setItem("favName", name);
+
+      // redirect (next page later design pannalam)
+      window.location.href = "wishes.html";
+    }
+  </script>
+
+</body>
+</html>

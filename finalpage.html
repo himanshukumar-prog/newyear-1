@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Final Wish 🌙✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Caveat', cursive;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: #020111; /* Fallback color */
+  color: white;
+  user-select: none;
+  
+}
+
+/* BACKGROUND SKY IMAGE */
+.sky-bg {
+  position: fixed;
+  inset: 0;
+  background: url("./sky-1.jpg") center/cover no-repeat; /* Inga unga sky image name kudunga */
+  z-index: -2;
+}
+
+/* BIG MOON */
+.moon {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  width: 220px; /* Periya size */
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+  z-index: 1;
+}
+
+
+
+/* SKY LANTERNS (Lights) */
+.lantern {
+  position: absolute;
+  bottom: -150px;
+  width: 60px; /* Size increased */
+  z-index: 3;
+  animation: floatUp 10s linear infinite;
+  filter: drop-shadow(0 0 10px orange);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translateY(-50vh) translateX(30px) rotate(10deg); }
+  100% { transform: translateY(-120vh) translateX(-20px) rotate(-10deg); opacity: 0; }
+}
+
+/* CENTER CONTENT */
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+h1 { font-size: 60px; text-shadow: 2px 2px 15px rgba(0,0,0,0.7); }
+p { font-size: 34px; margin-top: 10px; }
+
+.box {
+  margin-top: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+textarea {
+  width: 100%; height: 100px; border-radius: 12px; border: none;
+  padding: 10px; font-size: 22px; margin-top: 10px;
+}
+
+button {
+  margin-top: 15px; padding: 8px 30px; border-radius: 30px;
+  border: none; background: #ff3d7f; color: white; font-size: 24px; cursor: pointer;
+}
+
+.success { margin-top: 10px; color: #7CFF9B; font-size: 22px; display: none; }
+
+</style>
+</head>
+
+<body>
+
+<div class="sky-bg"></div>
+
+<img src="./full_moon-removebg-preview.png" class="moon" alt="Moon">
+
+<div id="erikal-container"></div>
+
+<div id="lantern-container"></div>
+
+<div class="center">
+  <h1>Happy New Year ✨</h1>
+  <p>Indha varushathula perusa ethum plan illa…<br>
+Just neraiya sirippu,
+konjam Sandai,<br>
+konjam random talks,
+kutti kutti updates,<br>
+Happiness ah share pannikkanum,
+Seandhu Struggles-ah kooda Easy ah left hand la deal pannalam.<br>
+nee pakkathula-la irundhaa podhum.
+Ellam smooth-aa pogum nu namburen</p>
+  <p>Things that I want —<br>be with me, stay with me,<br>that's enough...🤍</p>
+
+  
+</div>
+<audio id="bgMusic" loop>
+  <source src="./bgm.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+// User page-la click panna music start aagum
+document.body.addEventListener('click', function() {
+    var audio = document.getElementById('bgMusic');
+    if (audio.paused) {
+        audio.play();
+    }
+}, { once: true }); // Oru thadava click panna podhum
+</script>
+
+<script>
+// Lanterns generate panna (Neraiya light vara)
+const lanternContainer = document.getElementById('lantern-container');
+for (let i = 0; i < 25; i++) {
+  let lantern = document.createElement('img');
+  lantern.src = "./sky_lanterns-1-removebg-preview.png"; // Unga light image name
+  lantern.className = 'lantern';
+  lantern.style.left = Math.random() * 100 + '%';
+  lantern.style.animationDuration = (Math.random() * 5 + 8) + 's';
+  lantern.style.animationDelay = (Math.random() * 10) + 's';
+  // Random size for lanterns
+  let size = Math.random() * 40 + 40; 
+  lantern.style.width = size + 'px';
+  lanternContainer.appendChild(lantern);
+}
+
+</script>
+
+</body>
+</html>

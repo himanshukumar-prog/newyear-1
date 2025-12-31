@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Gaming Zone 🎮</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lexend+Deca&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff3d7f;
+            --secondary: #00f2fe;
+            --bg: #1a0033;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fredoka One', cursive; }
+        body { background: radial-gradient(circle at center, #2e004d, #000); color: white; overflow: hidden; height: 100vh; text-align: center; user-select: none; }
+
+        section { display: none; height: 100vh; padding: 20px; flex-direction: column; align-items: center; justify-content: center; }
+        .active { display: flex; }
+
+        h1 { font-size: 3rem; color: var(--secondary); text-shadow: 0 0 10px var(--secondary); }
+        .score-board { font-size: 1.5rem; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 20px; margin: 10px; }
+        .msg-text { font-size: 1.4rem; color: #ffeb3b; margin: 10px; min-height: 40px; }
+
+        button { padding: 12px 30px; border: none; border-radius: 50px; background: var(--primary); color: white; font-size: 1.2rem; cursor: pointer; margin: 10px; box-shadow: 0 5px 15px rgba(255, 61, 127, 0.4); transition: 0.3s; }
+        button:hover { transform: scale(1.1); }
+
+        /* Background Particles */
+        .particle { position: absolute; animation: floatUp 10s linear infinite; opacity: 0.5; pointer-events: none; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); } }
+
+        /* Game 1: Catch Food */
+        #gameArea1 { width: 100%; max-width: 500px; height: 50vh; background: rgba(255,255,255,0.05); position: relative; border-radius: 15px; border: 2px solid #444; overflow: hidden; }
+        #basket { width: 80px; height: 50px; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); transition: left 0.1s; }
+        .falling-item { position: absolute; font-size: 40px; }
+
+        /* Game 2: Brain Test */
+        #timer2 { width: 60px; height: 60px; border-radius: 50%; border: 4px solid var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 10px auto; }
+        .option-btn { background: #333; width: 250px; display: block; margin: 10px auto; }
+        .reaction-gif { width: 150px; height: 150px; border-radius: 10px; margin-top: 10px; }
+
+        /* Game 3: Heart Challenge */
+        #gameArea3 { width: 100%; height: 60vh; position: relative; }
+        .popup-item { position: absolute; font-size: 45px; cursor: pointer; transition: 0.2s; }
+
+        .gif-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.reaction-gif {
+    width: 200px;        /* Adjust size as needed */
+    border-radius: 15px; /* Gives it smooth edges */
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3); /* Adds a gaming depth effect */
+}
+#instantReaction {
+    max-height: 100%; /* Keeps it inside the 120px div */
+    width: auto;      /* Maintains aspect ratio */
+    display: block;
+    margin: 0 auto;
+}
+    </style>
+</head>
+<body>
+
+<script>
+    for(let i=0; i<25; i++) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        p.innerText = ['✨','⭐','🌸','🫧'][Math.floor(Math.random()*4)];
+        p.style.left = Math.random()*100 + '%';
+        p.style.fontSize = Math.random()*20+10 + 'px';
+        p.style.animationDuration = Math.random()*5+5 + 's';
+        document.body.appendChild(p);
+    }
+</script>
+
+<section id="welcome" class="active">
+    <div class="gif-container">
+        <img src="./ready.gif" 
+             alt="Gaming Reaction" 
+             class="reaction-gif">
+    </div>
+
+    <h1>🎮 GAMING ZONE</h1>
+    <p style="font-size: 1.5rem;">Ready ah? 3 Games irukku!</p>
+    <button onclick="startGame1()">Let's Play!</button>
+</section>
+
+<section id="game1">
+    <h2>🍔 Catch the Food</h2>
+    
+    <div style="height: 100px; text-align: center; margin-bottom: 10px;">
+        <img id="g1Reaction" src="" style="width: 80px; display: none; margin: 0 auto; border-radius: 10px;">
+        <p id="g1msg" class="msg-text" style="font-size: 1.1rem; margin-top: 5px;"></p>
+    </div>
+
+    <div class="score-board">Score: <span id="g1score">0</span> / 10</div>
+    
+    <div id="gameArea1" style="position: relative; overflow: hidden; height: 400px; border-bottom: 3px solid #333;">
+        <img id="basket" src="./bowl.png" alt="Basket" style="position: absolute; bottom: 10px; width: 80px; transition: left 0.1s ease;">
+    </div>
+
+    <div style="text-align: center; margin-top: 15px;">
+        <button id="g1next" style="display:none;" class="btn-choice yes" onclick="showGame(2)">Next Game 🧠</button>
+    </div>
+</section>
+
+<section id="game2" class="screen">
+    <h2>🧠 Brain Test</h2>
+    <div id="timer2" style="font-size: 2.5rem; color: #ff4d4d; font-weight: bold;">5</div>
+    
+    <div style="height: 120px; margin-top: 10px;">
+        <img id="instantReaction" src="" style="width: 100px; display:none; margin: 0 auto; border-radius: 10px;">
+    </div>
+
+    <p id="qText" style="font-size: 1.8rem; margin: 15px; min-height: 60px;"></p>
+    <div id="optionsArea"></div>
+
+    <div id="g2ResultArea" style="display:none; flex-direction: column; align-items: center;">
+        <img id="g2ReactionImg" src="" alt="Final Reaction" style="width: 200px; border-radius: 15px; margin-bottom: 15px;">
+        <p id="g2FinalMsg" style="font-weight: bold; font-size: 1.4rem; padding: 0 20px;"></p>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn-choice yes" onclick="restartGame2()">Replay 🔄</button>
+            <button class="btn-choice yes" style="background: #3498db;" onclick="showGame(3)">Next Game ❤️</button>
+        </div>
+    </div>
+</section>
+
+<section id="game3">
+    <h2>❤️ Heart Challenge</h2>
+    <div class="score-board">Hearts: <span id="hscore">0</span>/10 | Time: <span id="htime">30</span>s</div>
+    
+    <div style="height: 100px; text-align: center; margin-top: 10px;">
+        <img id="hReaction" src="" style="width: 80px; display: none; margin: 0 auto; border-radius: 10px;">
+        <p id="hmsg" class="msg-text">Catch 10 hearts!</p>
+    </div>
+
+    <div id="gameArea3" style="position: relative; height: 350px; width: 100%; max-width: 400px; border: 2px dashed #ffb6c1; border-radius: 15px; background: rgba(255,192,203,0.1); overflow: hidden; margin: 0 auto;"></div>
+
+    <div id="g3fail" style="display:none; text-align: center; margin-top: 10px;">
+        <img id="g3FinalGif" src="" style="width: 120px; border-radius: 15px; margin-bottom: 5px;"><br>
+        <button onclick="startHeartGame()">Try Again 🔄</button>
+    </div>
+</section>
+
+<section id="final">
+    <img src="./cat with trophy.png" style="border-radius: 20px; width: 250px;">
+    <h2 style="margin: 20px;">You won the Trophy and my Heart 💖</h2>
+    <button onclick="window.location.href='finalpage.html'">Next Level 🚀</button>
+</section>
+
+<script>
+
+    function showGame(gameNumber) {
+    // Hide all game sections
+    document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+    });
+    // Show the specific game section
+    const targetGame = document.getElementById('game' + gameNumber);
+    if (targetGame) {
+        targetGame.style.display = 'flex'; // or 'block' depending on your layout
+        
+        // If it's Game 2, start it automatically
+        if(gameNumber === 2) {
+            restartGame2();
+        }
+        // If it's Game 3, initialize Game 3 logic
+        if(gameNumber === 3) {
+            initGame3(); 
+        }
+    }
+}
+/* UTILS */
+function showGame(n) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    let ids = ['welcome','game1','game2','game3','final'];
+    document.getElementById(ids[n]).classList.add('active');
+    if(n==2) restartGame2();
+    if(n==3) startHeartGame();
+}
+
+/* --- GAME 1 LOGIC --- */
+let g1Score = 0;
+let basketPos = 50;
+const basket = document.getElementById('basket');
+const g1Area = document.getElementById('gameArea1');
+
+function startGame1() {
+    showGame(1);
+    let gameInterval = setInterval(() => {
+        if(g1Score >= 10) { clearInterval(gameInterval); return; }
+        spawnItem();
+    }, 1200);
+}
+
+// Basket Movement
+document.addEventListener('keydown', (e) => {
+    if(e.key === "ArrowLeft" && basketPos > 5) basketPos -= 8;
+    if(e.key === "ArrowRight" && basketPos < 95) basketPos += 8;
+    basket.style.left = basketPos + '%';
+});
+
+// Click/Touch movement for mobile
+g1Area.addEventListener('click', (e) => {
+    let rect = g1Area.getBoundingClientRect();
+    let x = ((e.clientX - rect.left) / rect.width) * 100;
+    basketPos = x;
+    basket.style.left = basketPos + '%';
+});
+
+function spawnItem() {
+    const item = document.createElement('div');
+    const isBomb = Math.random() < 0.2;
+    item.className = 'falling-item';
+    item.innerText = isBomb ? "💣" : ["🍔","🍕","🍩","🍎"][Math.floor(Math.random()*4)];
+    item.style.left = Math.random() * 90 + '%';
+    item.style.top = "-50px";
+    g1Area.appendChild(item);
+
+    let fall = setInterval(() => {
+        let top = parseFloat(item.style.top);
+        item.style.top = (top + 4) + "px";
+
+        // Collision Check
+        let itemRect = item.getBoundingClientRect();
+        let basketRect = basket.getBoundingClientRect();
+
+        if (itemRect.bottom >= basketRect.top && itemRect.left < basketRect.right && itemRect.right > basketRect.left) {
+            clearInterval(fall);
+            item.remove();
+            if(isBomb) {
+                g1Score = 0;
+                document.getElementById('g1msg').innerText = "olunga pudi! 🤕";
+                document.getElementById('g1score').innerText = g1Score;
+            } else {
+                g1Score++;
+                document.getElementById('g1score').innerText = g1Score;
+                document.getElementById('g1msg').innerText = "Nalla sapttu busu busu nu irraah 😋";
+                if(g1Score >= 10) {
+                    document.getElementById('g1next').style.display = "inline-block";
+                }
+            }
+        }
+        if(top > 500) { clearInterval(fall); item.remove(); }
+    }, 20);
+}
+/* --- GAME 2 LOGIC UPDATED --- */
+const questions = [
+    {q: "Which city was called Kadambavanam?", a:["Madurai", "kanjipuram", "karaikudi"], c:0},
+    {q: "What item was once used as a salary?", a:["iron", "salt", "rice"], c:1},
+    {q: "After bone marrow,which tissue grows the fastest in human?", a:["skin", "hair", "bone"], c:1},
+    {q: "Tamil,Sanskrit,Arabic intha moondru languages la irunthu pala words borrow pannina language ethu?", a:["english", "french", "spanish"], c:0},
+    {q: "Mobile off panninaalum still function agura feature ethu?", a:["recording", "internet", "alarm"], c:2}
+];
+
+let currentQ = 0, g2Score = 0, qTimer;
+
+// Image links for specific reactions
+const reactionGifs = {
+    wrong: "./padida.gif", // Ouch/Hammer hit
+    lowScore: "./slap.gif", // No brain
+    midScore: "./sabhash.gif", // Horlicks/Average
+    highScore: "./bujukku.gif" // Genius
+};
+
+function restartGame2() {
+    currentQ = 0; g2Score = 0;
+    document.getElementById('g2ResultArea').style.display = "none";
+    document.getElementById('optionsArea').style.display = "block";
+    document.getElementById('instantReaction').style.display = "none"; // Hide wrong GIF
+    loadQuestion();
+}
+
+function loadQuestion() {
+    if(currentQ >= questions.length) { showG2Result(); return; }
+    
+    document.getElementById('instantReaction').style.display = "none"; 
+    clearInterval(qTimer);
+    let timeLeft = 5;
+    document.getElementById('timer2').innerText = timeLeft;
+    
+    document.getElementById('qText').innerText = questions[currentQ].q;
+    let opts = document.getElementById('optionsArea');
+    opts.innerHTML = "";
+    
+    questions[currentQ].a.forEach((opt, i) => {
+        let btn = document.createElement('button');
+        btn.className = "option-btn";
+        btn.innerText = opt;
+        btn.onclick = () => checkG2Ans(i);
+        opts.appendChild(btn);
+    });
+
+    qTimer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer2').innerText = timeLeft;
+        if(timeLeft <= 0) { checkG2Ans(-1); }
+    }, 1000);
+}
+
+function checkG2Ans(idx) {
+    clearInterval(qTimer);
+    let qText = document.getElementById('qText');
+    let reactionImg = document.getElementById('instantReaction');
+
+    // Show the reaction image container
+    reactionImg.style.display = "block";
+
+    if (idx === questions[currentQ].c) { 
+        g2Score++; 
+        qText.innerText = "Paarrah correct ah solitta! ✅";
+        reactionImg.src = reactiongifs.correct; // Set to Correct GIF
+    } else {
+        qText.innerText = " 🤦‍♂️ (parama padi da)";
+        reactionImg.src = reactionGifs.wrong;   // Set to Wrong GIF
+    }
+    
+    // Disable buttons so they can't click again during the pause
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    // Pause for 1.5 seconds to show the reaction, then load next or hide GIF
+    setTimeout(() => { 
+        reactionImg.style.display = "none"; // Hide GIF for next question
+        currentQ++; 
+        loadQuestion(); 
+    }, 1500);
+}
+
+const reactiongifs = {
+    correct: "./sabhash.gif", // Happy/Success GIF
+   }
+
+function showG2Result() {
+    document.getElementById('optionsArea').style.display = "none";
+    document.getElementById('qText').innerText = "Game Over!";
+    document.getElementById('timer2').innerText = "Score: " + g2Score;
+    
+    let resImg = document.getElementById('g2ReactionImg');
+    let resMsg = document.getElementById('g2FinalMsg');
+    
+    if(g2Score <= 1) {
+        resImg.src = reactionGifs.lowScore;
+        resMsg.innerText = "unakku moola irukkannu muthella scan pannipaaru! 💀";
+    } else if(g2Score <= 3) {
+        resImg.src = reactionGifs.midScore;
+        resMsg.innerText = "paravala yetho moola irukku intha horlicks sapdu... 🥛";
+    } else {
+        resImg.src = reactionGifs.highScore;
+        resMsg.innerText = "oththukurean unakkum brain irukunnu 🍨⭐⭐⭐⭐⭐";
+    }
+    
+    document.getElementById('g2ResultArea').style.display = "block";
+}
+
+let hScore = 0, hTime = 30, hGameTimer, hSpawnTimer;
+
+const hGifs = {
+    correct: "./comeon.png",
+    wrong: "./wrong.gif",
+    timeout: "./vadivelulook.jpg"
+};
+
+function startHeartGame() {
+    // Resetting everything
+    hScore = 0; hTime = 30;
+    document.getElementById('hscore').innerText = hScore;
+    document.getElementById('htime').innerText = hTime;
+    document.getElementById('hmsg').innerText = "Catch 10 hearts!";
+    document.getElementById('gameArea3').innerHTML = "";
+    document.getElementById('g3fail').style.display = "none";
+    document.getElementById('hReaction').style.display = "none";
+    
+    clearInterval(hGameTimer); 
+    clearInterval(hSpawnTimer);
+
+    // Countdown Timer
+    hGameTimer = setInterval(() => {
+        hTime--;
+        document.getElementById('htime').innerText = hTime;
+        if(hTime <= 0) {
+            endGame3("Time Up! ⏳", hGifs.timeout);
+        }
+    }, 1000);
+
+    // Spawning Hearts
+    hSpawnTimer = setInterval(() => {
+        if(hScore < 10) spawnItem3();
+    }, 800);
+}
+
+function spawnItem3() {
+    const area = document.getElementById('gameArea3');
+    const item = document.createElement('div');
+    const isHeart = Math.random() < 0.7;
+    
+    item.className = 'popup-item';
+    item.innerText = isHeart ? "❤️" : "💣" ,"🤩","🌸","😌","🙈","😻";
+    item.style.left = Math.random() * 85 + "%";
+    item.style.top = Math.random() * 85 + "%";
+    
+    item.onclick = () => {
+        if(isHeart) {
+            hScore++;
+            document.getElementById('hscore').innerText = hScore;
+            item.remove();
+            if(hScore >= 10) {
+                clearInterval(hGameTimer);
+                clearInterval(hSpawnTimer);
+                showGame(4); // Winning Screen
+            }
+        } else {
+            // Bomb click reaction
+            endGame3("Ouch! Heart-ah mattum pudi! 😡", hGifs.wrong);
+        }
+    };
+    
+    area.appendChild(item);
+    // 1.5 seconds-la item auto-va maraiyum
+    setTimeout(() => { if(item) item.remove(); }, 1500);
+}
+
+function endGame3(msg, gif) {
+    clearInterval(hGameTimer);
+    clearInterval(hSpawnTimer);
+    document.getElementById('hmsg').innerText = msg;
+    document.getElementById('g3FinalGif').src = gif;
+    document.getElementById('g3fail').style.display = "block";
+    document.getElementById('gameArea3').innerHTML = "";
+}
+</script>
+</body>
+</html>
