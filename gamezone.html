@@ -84,7 +84,7 @@
     </div>
 
     <h1>🎮 GAMING ZONE</h1>
-    <p style="font-size: 1.5rem;">Ready ah? 3 Games irukku!</p>
+    <p style="font-size: 1.5rem;">Ready ho? 3 Games start!</p>
     <button onclick="startGame1()">Let's Play!</button>
 </section>
 
@@ -250,11 +250,11 @@ function spawnItem() {
 }
 /* --- GAME 2 LOGIC UPDATED --- */
 const questions = [
-    {q: "Which city was called Kadambavanam?", a:["Madurai", "kanjipuram", "karaikudi"], c:0},
-    {q: "What item was once used as a salary?", a:["iron", "salt", "rice"], c:1},
-    {q: "After bone marrow,which tissue grows the fastest in human?", a:["skin", "hair", "bone"], c:1},
-    {q: "Tamil,Sanskrit,Arabic intha moondru languages la irunthu pala words borrow pannina language ethu?", a:["english", "french", "spanish"], c:0},
-    {q: "Mobile off panninaalum still function agura feature ethu?", a:["recording", "internet", "alarm"], c:2}
+    {q: "aap meri kya lgti ho?", a:["best friend", "patner", "normal friend"], c:0},
+    {q: "you know yor are the best?", a:["yess", "noo", "tumse puchugi"], c:2},
+    {q: "which i like in you most?", a:["behavior", "you", "looks"], c:1},
+    {q: "hum kab tk sath rahege?", a:["kuch din", "sirf is saal", "forever"], c:2},
+    {q: "if we are seprated,will you miss me?", a:["nope", "don'know", "yess"], c:2}
 ];
 
 let currentQ = 0, g2Score = 0, qTimer;
@@ -312,10 +312,10 @@ function checkG2Ans(idx) {
 
     if (idx === questions[currentQ].c) { 
         g2Score++; 
-        qText.innerText = "Paarrah correct ah solitta! ✅";
+        qText.innerText = "bilkul sahi! ✅";
         reactionImg.src = reactiongifs.correct; // Set to Correct GIF
     } else {
-        qText.innerText = " 🤦‍♂️ (parama padi da)";
+        qText.innerText = " 🤦‍♂️ (wrong)";
         reactionImg.src = reactionGifs.wrong;   // Set to Wrong GIF
     }
     
@@ -345,13 +345,13 @@ function showG2Result() {
     
     if(g2Score <= 1) {
         resImg.src = reactionGifs.lowScore;
-        resMsg.innerText = "unakku moola irukkannu muthella scan pannipaaru! 💀";
+        resMsg.innerText = "fir se try kro! 💀";
     } else if(g2Score <= 3) {
         resImg.src = reactionGifs.midScore;
-        resMsg.innerText = "paravala yetho moola irukku intha horlicks sapdu... 🥛";
+        resMsg.innerText = "better, ek baar fir kare... 🥛";
     } else {
         resImg.src = reactionGifs.highScore;
-        resMsg.innerText = "oththukurean unakkum brain irukunnu 🍨⭐⭐⭐⭐⭐";
+        resMsg.innerText = "thet,s graet ab aage chale 🍨⭐⭐⭐⭐⭐";
     }
     
     document.getElementById('g2ResultArea').style.display = "block";
